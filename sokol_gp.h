@@ -1754,11 +1754,10 @@ void sgp_setup(const sgp_desc* desc) {
     memset(_sgp.commands, 0, _sgp.num_commands * sizeof(_sgp_command));
 
     // create vertex buffer
-    sg_buffer_desc vertex_buf_desc;
-    memset(&vertex_buf_desc, 0, sizeof(sg_buffer_desc));
+    sg_buffer_desc vertex_buf_desc = {0};
     vertex_buf_desc.size = (size_t)(_sgp.num_vertices * sizeof(sgp_vertex));
-    vertex_buf_desc.type = SG_BUFFERTYPE_VERTEXBUFFER;
-    vertex_buf_desc.usage = SG_USAGE_STREAM;
+    vertex_buf_desc.usage.vertex_buffer = true;
+    vertex_buf_desc.usage.stream_update = true;
 
     _sgp.vertex_buf = sg_make_buffer(&vertex_buf_desc);
     if (sg_query_buffer_state(_sgp.vertex_buf) != SG_RESOURCESTATE_VALID) {
